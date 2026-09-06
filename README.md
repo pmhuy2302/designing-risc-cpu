@@ -84,3 +84,31 @@ The processor executes each instruction through an 8-state FSM sequence managed 
 8. **`STORE` (Writeback):** Controller asserts `ld_ac = 1` to update Accumulator, or `wr = 1` during `STO` to write back to Memory.
 
 Upon completing **`STORE`**, execution cycles back to **`INST_ADDR`** unless a `HLT` instruction halts the processor.
+
+---
+
+## 3. Code Tree
+
+```text
+designing-risc-cpu/
+├── RTL/
+│   ├── ac.v                    
+│   ├── addr_mux.v
+│   ├── alu.v
+│   ├── controller.v
+│   ├── cpu.v
+│   ├── ir.v
+│   ├── memory.v
+│   └── pc.v
+├── Testbench/                             
+│   ├── ac_tb.v                    
+│   ├── addr_mux_tb.v
+│   ├── alu_tb.v
+│   ├── controller_tb.v
+│   ├── cpu_tb.v
+│   ├── ir_tb.v
+│   ├── memory_tb.v
+│   └── pc_tb.v
+├── docs/
+├── .gitignore                  
+└── README.md
