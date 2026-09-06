@@ -45,7 +45,28 @@ The hierarchy design is divided into 7 modules to ensure readability, testing, a
 | `addr` | 5-bit | Target memory address selected by Address MUX (`pc_addr`/`operand`). |
 | `data_bus` | 9-bit | Primary bidirectional data bus for memory read/write. |
 
-### 2.3 System Workflow
+### 2.3 Opcode Table
+
+| Opcode | Instruction | Description |
+| :---: | :---: | :--- |
+| `0000` | **HLT** | Halt processor execution |
+| `0001` | **SKZ** | Skip next instruction if zero flag is asserted |
+| `0010` | **ADD** | Unsigned addition |
+| `0011` | **AND** | Bitwise AND operation |
+| `0100` | **XOR** | Bitwise XOR operation |
+| `0101` | **LDA** | Load data from memory to Accumulator |
+| `0110` | **STO** | Store Accumulator value to memory |
+| `0111` | **JMP** | Jump to target address |
+| `1000` | **SUB** | Subtraction operation |
+| `1001` | **OR**  | Bitwise OR operation |
+| `1010` | **MUL** | Unsigned multiplication |
+| `1011` | **___** | Mini Floating-Point Multiplier |
+| `1100` | **SHL** | Shift left operation |
+| `1101` | **SHR** | Shift right operation |
+| `1110` | **NOT** | Invert the Accumulator value |
+| `1111` | **SKO** | Skip next instruction if overflow flag is asserted |
+
+### 2.4 System Workflow
 
 The processor executes each instruction through an 8-state FSM sequence managed by the Controller over 8 consecutive clock cycles:
 
