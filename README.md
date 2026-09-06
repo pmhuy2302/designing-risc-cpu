@@ -1,4 +1,4 @@
-# 9-bit Extended RISC Processor with Custom Mini-FP Multiplier
+# DESIGNING A RISC PROCESSOR
 
 ![Verilog](https://img.shields.io/badge/Language-Verilog_HDL-blue.svg)
 ![Tools](https://img.shields.io/badge/Tools-Xilinx_Vivado-orange.svg)
