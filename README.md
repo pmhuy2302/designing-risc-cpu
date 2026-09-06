@@ -2,7 +2,7 @@
 
 ![Verilog](https://img.shields.io/badge/Language-Verilog_HDL-blue.svg)
 ![Tools](https://img.shields.io/badge/Tools-Xilinx_Vivado-orange.svg)
-![Target](https://img.shields.io/badge/Architecture-Accumulator--Based-green.svg)
+![Target](https://img.shields.io/badge/Architecture-RISC-green.svg)
 
 ## 1. Introduction
 
