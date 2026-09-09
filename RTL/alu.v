@@ -22,7 +22,7 @@ module alu #(parameter WIDTH = 16)(
     localparam SUB = 4'b1000;
     localparam OR  = 4'b1001;
     localparam MUL = 4'b1010;
-    localparam MULS = 4'b1011;
+    localparam MAC = 4'b1011;
     localparam SHL = 4'b1100;
     localparam SHR = 4'b1101;
     localparam NOT = 4'b1110;
@@ -53,7 +53,7 @@ module alu #(parameter WIDTH = 16)(
             end
             OR: alu_out = inA | inB;
             MUL: alu_out = inA * inB;
-            MULS: alu_out = $signed (inA) * $signed (inB); // !!!
+            MAC: alu_out = inA + inA * inB;
             
             SHL: begin
                 alu_out   = inA << 1;

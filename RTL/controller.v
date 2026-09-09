@@ -16,7 +16,7 @@ module controller (
     localparam SUB = 4'b1000;
     localparam OR  = 4'b1001;
     localparam MUL = 4'b1010;
-    localparam MULS = 4'b1011;
+    localparam MAC = 4'b1011;
     localparam SHL = 4'b1100;
     localparam SHR = 4'b1101;
     localparam NOT = 4'b1110;
@@ -103,7 +103,7 @@ module controller (
                 begin
                     case(opcode)
                         ADD, AND, XOR, LDA, SUB,
-                        OR, MUL, MULS, SHL, SHR: rd = 1;
+                        OR, MUL, MAC, SHL, SHR: rd = 1;
                         default: ;
                     endcase
                 end
@@ -111,7 +111,7 @@ module controller (
                 begin
                     case(opcode)
                         ADD, AND, XOR, LDA, SUB,
-                        OR, MUL, MULS, SHL, SHR: rd = 1;
+                        OR, MUL, MAC, SHL, SHR: rd = 1;
                         SKZ: if (zero) inc_pc = 1;
                         SKO: if (overflow) inc_pc = 1;
                         JMP: ld_pc = 1;
@@ -122,7 +122,7 @@ module controller (
                 begin
                     case(opcode)
                         ADD, AND, XOR, LDA, SUB,
-                        OR, MUL, MULS, SHL, SHR, NOT: 
+                        OR, MUL, MAC, SHL, SHR, NOT: 
                             begin
                                 rd = 1;
                                 ld_ac = 1;
