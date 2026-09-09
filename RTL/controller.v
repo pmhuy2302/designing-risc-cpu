@@ -40,7 +40,7 @@ module controller (
         if(rst)
             state <= INST_ADDR;
         else
-            state <= next_state;
+            state <= next_state; 
     end
     
     // NEXT STATE LOGIC

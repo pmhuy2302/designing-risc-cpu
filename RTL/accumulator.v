@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module accumulator #(parameter WIDTH = 9) (
+module accumulator #(parameter WIDTH = 16) (
     input clk, rst, ld_ac, overflow_in,
     input [WIDTH - 1:0] data_in,
     output reg [WIDTH - 1:0] ac_out = 0,

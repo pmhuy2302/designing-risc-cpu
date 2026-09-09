@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module alu #(parameter WIDTH = 9)(
+module alu #(parameter WIDTH = 16)(
     input [WIDTH - 1:0] inA, inB,
     input [3:0] opcode,
     output reg [WIDTH - 1:0] alu_out,
@@ -33,7 +33,7 @@ module alu #(parameter WIDTH = 9)(
 
     
     always @(*) begin
-        overflow = 0;
+        overflow = 1'b0;
         alu_out = {WIDTH{1'b0}};
         case(opcode)
             HLT: alu_out = inA;
@@ -53,7 +53,7 @@ module alu #(parameter WIDTH = 9)(
             end
             OR: alu_out = inA | inB;
             MUL: alu_out = inA * inB;
-            MULS: alu_out = $signed (inA) * $signed (inB);
+            MULS: alu_out = $signed (inA) * $signed (inB); // !!!
             
             SHL: begin
                 alu_out   = inA << 1;

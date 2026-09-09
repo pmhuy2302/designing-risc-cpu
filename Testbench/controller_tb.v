@@ -97,7 +97,7 @@ module controller_tb();
         run_instruction(4'b0000,0,0,0);
         
         $display("ALL CONTROLLER TESTS COMPLETED");
-        #20;
+        #20; 
         $finish;
     end
 endmodule
