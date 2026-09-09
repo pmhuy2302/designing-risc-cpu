@@ -1,15 +1,15 @@
 `timescale 1ns / 1ps
 
-module instruction_register #(parameter WIDTH = 9) (
+module instruction_register #(parameter INSTRUCTION_WIDTH = 16, OPCODE_WIDTH = 4) (
     input wire clk,
     input wire rst,
     input wire ld_ir,
-    input wire [WIDTH - 1:0] data,
-    output reg [3:0] opcode,
-    output reg [WIDTH - 5:0] addr
+    input wire [INSTRUCTION_WIDTH - 1:0] data,
+    output reg [OPCODE_WIDTH - 1:0] opcode,
+    output reg [INSTRUCTION_WIDTH - OPCODE_WIDTH - 1:0] addr
 );
 
-    reg [WIDTH - 1:0] ir_reg;
+    reg [INSTRUCTION_WIDTH - 1:0] ir_reg;
 
     always @(posedge clk) begin
         if (rst) begin
@@ -20,8 +20,8 @@ module instruction_register #(parameter WIDTH = 9) (
     end
 
     always @(*) begin
-        opcode = ir_reg[WIDTH - 1:WIDTH - 4]; 
-        addr   = ir_reg[WIDTH - 5:0]; 
+        opcode = ir_reg[INSTRUCTION_WIDTH - 1:INSTRUCTION_WIDTH - OPCODE_WIDTH]; 
+        addr   = ir_reg[INSTRUCTION_WIDTH - OPCODE_WIDTH - 1:0]; 
     end
 
 endmodule
