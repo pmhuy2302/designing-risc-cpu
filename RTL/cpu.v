@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
-module cpu #(parameter WIDTH = 9) (
+module cpu #(parameter OPCODE_WIDTH = 4, OPERAND_WIDTH = 12) (
     input clk, rst,  
     output halt 
     );
     
     wire rd, wr, ld_ir, ld_pc, inc_pc, sel, zero, ld_ac, data_e, old_overflow, new_overflow;
-    wire [WIDTH - 5:0] addr, operand, pc_addr;
-    wire [3:0] opcode;
-    wire [WIDTH - 1:0] ac_out, alu_out, data_bus;
+    wire [OPERAND_WIDTH - 1:0] addr, operand, pc_addr;
+    wire [OPCODE_WIDTH - 1:0] opcode;
+    wire [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] ac_out, alu_out, data_bus;
     
     // Instantiate submodules
     memory mem(
@@ -46,6 +46,6 @@ module cpu #(parameter WIDTH = 9) (
     );
     
     // Declare tri-state buffer 
-    assign data_bus = (data_e)?ac_out:{WIDTH{1'bz}};
+    assign data_bus = (data_e)?ac_out:{OPCODE_WIDTH + OPERAND_WIDTH{1'bz}};
     
 endmodule

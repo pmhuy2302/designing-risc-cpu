@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
-module controller (
-    input clk, rst, [3:0] opcode, zero, overflow,
+module controller #(parameter OPCODE_WIDTH = 4, OPERAND_WIDTH = 12) (
+    input clk, rst, [OPCODE_WIDTH - 1:0] opcode, zero, overflow,
     output reg sel, rd, ld_ir, halt, inc_pc, ld_ac, ld_pc, wr, data_e
 );
     // OPCODE
@@ -40,7 +40,7 @@ module controller (
         if(rst)
             state <= INST_ADDR;
         else
-            state <= next_state; 
+            state <= next_state;
     end
     
     // NEXT STATE LOGIC
@@ -65,45 +65,45 @@ module controller (
     end
     // OUTPUT LOGIC
     always @(*) begin
-        sel = 0;
-        rd = 0;
-        ld_ir = 0;
-        halt = 0;
-        inc_pc = 0;
-        ld_ac = 0;
-        ld_pc = 0;
-        wr = 0;
-        data_e = 0;
+        sel = 1'b0;
+        rd = 1'b0;
+        ld_ir = 1'b0;
+        halt = 1'b0;
+        inc_pc = 1'b0;
+        ld_ac = 1'b0;
+        ld_pc = 1'b0;
+        wr = 1'b0;
+        data_e = 1'b0;
 
         case(state)
-            INST_ADDR: sel = 1;
+            INST_ADDR: sel = 1'b1;
             INST_FETCH: 
                 begin
-                    sel = 1;
-                    rd = 1;
+                    sel = 1'b1;
+                    rd = 1'b1;
                 end 
             INST_LOAD:  
                 begin
-                    sel = 1;
-                    rd = 1;
-                    ld_ir = 1;
+                    sel = 1'b1;
+                    rd = 1'b1;
+                    ld_ir = 1'b1;
                 end
             IDLE:
                 begin
-                    sel = 1;
-                    rd = 1;
-                    ld_ir = 1;
+                    sel = 1'b1;
+                    rd = 1'b1;
+                    ld_ir = 1'b1;
                 end
             OP_ADDR:
                 begin
-                    if (opcode == HLT) halt = 1;
-                    else inc_pc = 1;
+                    if (opcode == HLT) halt = 1'b1;
+                    else inc_pc = 1'b1;
                 end
             OP_FETCH:
                 begin
                     case(opcode)
                         ADD, AND, XOR, LDA, SUB,
-                        OR, MUL, MAC, SHL, SHR: rd = 1;
+                        OR, MUL, MAC, SHL, SHR: rd = 1'b1;
                         default: ;
                     endcase
                 end
@@ -111,11 +111,11 @@ module controller (
                 begin
                     case(opcode)
                         ADD, AND, XOR, LDA, SUB,
-                        OR, MUL, MAC, SHL, SHR: rd = 1;
-                        SKZ: if (zero) inc_pc = 1;
-                        SKO: if (overflow) inc_pc = 1;
-                        JMP: ld_pc = 1;
-                        STO: data_e = 1;
+                        OR, MUL, MAC, SHL, SHR: rd = 1'b1;
+                        SKZ: if (zero) inc_pc = 1'b1;
+                        SKO: if (overflow) inc_pc = 1'b1;
+                        JMP: ld_pc = 1'b1;
+                        STO: data_e = 1'b1;
                     endcase
                 end
             STORE:
@@ -124,14 +124,14 @@ module controller (
                         ADD, AND, XOR, LDA, SUB,
                         OR, MUL, MAC, SHL, SHR, NOT: 
                             begin
-                                rd = 1;
-                                ld_ac = 1;
+                                rd = 1'b1;
+                                ld_ac = 1'b1;
                             end
-                        JMP:ld_pc = 1;
+                        JMP:ld_pc = 1'b1;
                         STO:
                             begin
-                                wr = 1;
-                                data_e = 1;
+                                wr = 1'b1;
+                                data_e = 1'b1;
                             end
                     endcase
                 end
