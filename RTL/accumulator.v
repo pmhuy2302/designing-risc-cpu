@@ -16,6 +16,5 @@ module accumulator #(parameter OPCODE_WIDTH = 4, OPERAND_WIDTH = 12) (
                 ac_out <= data_in;
                 overflow_out <= overflow_in;
             end
-        else ac_out <= ac_out;
     end
 endmodule
