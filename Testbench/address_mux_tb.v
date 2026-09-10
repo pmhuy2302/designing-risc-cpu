@@ -2,16 +2,15 @@
 
 module tb_address_mux();
 
-parameter WIDTH = 16;
+parameter OPCODE_WIDTH = 4;
+parameter OPERAND_WIDTH = 12;
 
 reg sel;
-reg [WIDTH-5:0] pc_addr;
-reg [WIDTH-5:0] op_addr;
-wire [WIDTH-5:0] addr_out;
+reg [OPERAND_WIDTH - 1:0] pc_addr;
+reg [OPERAND_WIDTH - 1:0] op_addr;
+wire [OPERAND_WIDTH - 1:0] addr_out;
 
-integer errors;
-
-address_mux #(.WIDTH(WIDTH)) dut (
+address_mux #(.OPCODE_WIDTH(OPCODE_WIDTH), .OPERAND_WIDTH(OPERAND_WIDTH)) uut (
     .sel(sel),
     .pc_addr(pc_addr),
     .op_addr(op_addr),
@@ -19,11 +18,11 @@ address_mux #(.WIDTH(WIDTH)) dut (
 );
 
 task print_result;
-    input [50:0] test_name;
+    input [63:0] test_name;
     input expected_sel;
-    input [WIDTH-5:0] expected_pc_addr;
-    input [WIDTH-5:0] expected_op_addr;
-    input [WIDTH-5:0] expected_addr_out;
+    input [OPERAND_WIDTH - 1:0] expected_pc_addr;
+    input [OPERAND_WIDTH - 1:0] expected_op_addr;
+    input [OPERAND_WIDTH - 1:0] expected_addr_out;
     begin
         $display("");
             $display("--- %s ---", test_name);
@@ -35,16 +34,14 @@ task print_result;
                      sel, pc_addr, op_addr, addr_out);
 
             if (addr_out !== expected_addr_out) begin
-                errors = errors + 1;
-                $display("RESULT: FAIL");
+                $display("RESULT: FAIL\n");
             end else begin
-                $display("RESULT: PASS");
+                $display("RESULT: PASS\n");
             end
         end
     endtask
 
     initial begin
-        errors  = 0;
         sel     = 0;
         pc_addr = 12'h000;
         op_addr = 12'h000;
@@ -59,57 +56,49 @@ task print_result;
         // Test 2: sel = 0
         sel = 1'b0;
         #1;
-        print_result("Test 2: sel = 0 selects op_addr", 1'b0, 12'h00A, 12'h019, 12'h019);
+        print_result("Test 2", 1'b0, 12'h00A, 12'h019, 12'h019);
 
         // Test 3
         pc_addr = 12'h003;
         op_addr = 12'h011;
 
         sel = 1'b1; #1;
-        print_result("Test 3.1: toggle sel to 1", 1'b1, 12'h003, 12'h011, 12'h003);
+        print_result("Test 3.1", 1'b1, 12'h003, 12'h011, 12'h003);
 
         sel = 1'b0; #1;
-        print_result("Test 3.2: toggle sel to 0", 1'b0, 12'h003, 12'h011, 12'h011);
+        print_result("Test 3.2", 1'b0, 12'h003, 12'h011, 12'h011);
 
         sel = 1'b1; #1;
-        print_result("Test 3.3: toggle sel back to 1", 1'b1, 12'h003, 12'h011, 12'h003);
+        print_result("Test 3.3", 1'b1, 12'h003, 12'h011, 12'h003);
 
         sel = 1'b0; #1;
-        print_result("Test 3.4: toggle sel back to 0", 1'b0, 12'h003, 12'h011, 12'h011);
+        print_result("Test 3.4", 1'b0, 12'h003, 12'h011, 12'h011);
 
         // Test 4
         sel     = 1'b1;
         op_addr = 12'h009;
 
         pc_addr = 12'h001; #1;
-        print_result("Test 4.1: sel = 1, pc_addr changes", 1'b1, 12'h001, 12'h009, 12'h001);
+        print_result("Test 4.1", 1'b1, 12'h001, 12'h009, 12'h001);
 
         pc_addr = 12'h00C; #1;
-        print_result("Test 4.2: sel = 1, pc_addr changes", 1'b1, 12'h00C, 12'h009, 12'h00C);
+        print_result("Test 4.2", 1'b1, 12'h00C, 12'h009, 12'h00C);
 
         pc_addr = 12'h01F; #1;
-        print_result("Test 4.3: sel = 1, pc_addr changes", 1'b1, 12'h01F, 12'h009, 12'h01F);
+        print_result("Test 4.3", 1'b1, 12'h01F, 12'h009, 12'h01F);
 
         // Test 5
         sel     = 1'b0;
         pc_addr = 12'h006;
 
         op_addr = 12'h002; #1;
-        print_result("Test 5.1: sel = 0, op_addr changes", 1'b0, 12'h006, 12'h002, 12'h002);
+        print_result("Test 5.1", 1'b0, 12'h006, 12'h002, 12'h002);
 
         op_addr = 12'h00E; #1;
-        print_result("Test 5.2: sel = 0, op_addr changes", 1'b0, 12'h006, 12'h00E, 12'h00E);
+        print_result("Test 5.2", 1'b0, 12'h006, 12'h00E, 12'h00E);
 
         op_addr = 12'h01E; #1;
-        print_result("Test 5.3: sel = 0, op_addr changes", 1'b0, 12'h006, 12'h01E, 12'h01E);
-
-        // Sumary
-        $display("");
-        if (errors == 0) begin
-            $display("ADDRESS MUX TEST SUMMARY: ALL TESTS PASSED");
-        end else begin
-            $display("ADDRESS MUX TEST SUMMARY: %0d TEST(S) FAILED", errors);
-        end
+        print_result("Test 5.3", 1'b0, 12'h006, 12'h01E, 12'h01E);
 
         $finish;
     end
