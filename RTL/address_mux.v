@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
-module address_mux #(parameter WIDTH = 16)(
+module address_mux #(parameter OPCODE_WIDTH = 4, OPERAND_WIDTH = 12)(
     input sel,
-    input [WIDTH-5:0] pc_addr, // -5 because of 4-bit opcode
-    input [WIDTH-5:0] op_addr,
-    output [WIDTH-5:0] addr_out
+    input [OPERAND_WIDTH - 1:0] pc_addr,
+    input [OPCODE_WIDTH - 1:0] op_addr,
+    output [OPERAND_WIDTH - 1:0] addr_out
     );
 
     assign addr_out = (sel) ? pc_addr : op_addr;

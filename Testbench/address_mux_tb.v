@@ -18,8 +18,8 @@ address_mux #(.WIDTH(WIDTH)) dut (
     .addr_out(addr_out)
 );
 
-task print_result_5;
-    input [639:0] test_name;
+task print_result;
+    input [50:0] test_name;
     input expected_sel;
     input [WIDTH-5:0] expected_pc_addr;
     input [WIDTH-5:0] expected_op_addr;
@@ -54,7 +54,7 @@ task print_result_5;
         op_addr = 12'h019;
         sel     = 1'b1;
         #1;
-        print_result("Test 1: sel = 1 selects pc_addr", 1'b1, 12'h00A, 12'h019, 12'h00A);
+        print_result("Test 1", 1'b1, 12'h00A, 12'h019, 12'h00A);
 
         // Test 2: sel = 0
         sel = 1'b0;

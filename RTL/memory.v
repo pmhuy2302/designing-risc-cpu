@@ -1,15 +1,15 @@
 `timescale 1ns / 1ps
 
-module memory #(parameter WIDTH = 9) (
+module memory #(parameter OPCODE_WIDTH = 4, OPERAND_WIDTH = 12) (
     input wire clk,
-    input wire [WIDTH - 5:0] addr,
+    input wire [OPERAND_WIDTH - 1:0] addr,
     input wire rd,
     input wire wr,
-    inout wire [WIDTH - 1:0] data
+    inout wire [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] data
 );
 
-    reg [WIDTH - 1:0] ram [0: 31];
-    reg [WIDTH - 1:0] data_out;
+    reg [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] ram [0: 2^(OPERAND_WIDTH) - 1];
+    reg [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] data_out;
     
     always @(posedge clk) begin
         if (wr && !rd) begin
@@ -23,6 +23,6 @@ module memory #(parameter WIDTH = 9) (
         end
     end
 
-    assign data = (rd) ? data_out : {WIDTH{1'bz}};
+    assign data = (rd) ? data_out : {OPCODE_WIDTH + OPERAND_WIDTH{1'bz}};
 
 endmodule
