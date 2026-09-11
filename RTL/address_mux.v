@@ -3,7 +3,7 @@
 module address_mux #(parameter OPCODE_WIDTH = 4, OPERAND_WIDTH = 12)(
     input sel,
     input [OPERAND_WIDTH - 1:0] pc_addr,
-    input [OPCODE_WIDTH - 1:0] op_addr,
+    input [OPERAND_WIDTH - 1:0] op_addr,
     output [OPERAND_WIDTH - 1:0] addr_out
     );
 
