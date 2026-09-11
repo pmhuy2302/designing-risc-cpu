@@ -211,16 +211,19 @@ other tests (***test_case != 1***), the TCL console prints out time, current tes
 
 ## 5. Synthesis Results
 
+* Target board: Arty Z7-20
+* Stage: Post-Implementation
+
 | Performance Criteria | Synthesized Value |
 | :---: | :---: |
-| Look-up Tables (LUTs) |  |
-| Flip-Flops |  |
-| Distributed Memory (LUTRAM) |  |
-| Input / Output Pins (IO) |  |
-| Worst Negative Slack (WNS) |  |
-| Worst Hold Slack (WHS) |  |
-| Total Power |  |
-| Junction Temperature |  |
+| LUT | 168 |
+| FF | 101 |
+| BRAM | 2 |
+| DSP | 2 |
+| IO | 3 Pins |
+| Worst Negative Slack (WNS) | 0.095 ns |
+| Total Power | 0.118 W |
+| Junction Temperature | 26.4 °C |
 
 ---
 
