@@ -8,7 +8,7 @@ module memory #(parameter OPCODE_WIDTH = 4, OPERAND_WIDTH = 12) (
     inout wire [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] data
 );
 
-    reg [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] ram [0: 2^(OPERAND_WIDTH) - 1];
+    reg [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] ram [0: (1 << OPERAND_WIDTH) - 1];
     reg [OPCODE_WIDTH + OPERAND_WIDTH - 1:0] data_out;
     
     always @(posedge clk) begin
