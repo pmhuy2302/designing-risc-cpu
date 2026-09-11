@@ -57,6 +57,5 @@ SUB 29  // -> AC = 16'b1000100010011101, overflow = 1'b1
 SKO     // -> overflow = 1'b1, skip the next instruction
 HALT    // -> Skipped
 OR 32   // -> AC = 16'b1111111111111111
-?
 NOT     // -> AC = 16'b0000000000000000
 HALT

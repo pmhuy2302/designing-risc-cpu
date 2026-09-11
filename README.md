@@ -136,8 +136,8 @@ designing-risc-cpu/
 │   ├── test3.txt
 │   ├── test4.txt
 │   └── test5.txt
-├── Picture
-├── Waveform
+├── Picture/
+├── Waveform/
 ├── .gitignore                  
 └── README.md
 ```
