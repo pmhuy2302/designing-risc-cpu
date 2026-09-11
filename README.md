@@ -29,8 +29,8 @@ The hierarchy design is divided into 7 modules:
 | `sel` | 1-bit | Address MUX select line (1: PC address, 0: Operand address). |
 | `data_e` | 1-bit | Tri-state buffer enable driving AC data onto `data_bus` during STO. |
 | `zero` | 1-bit | Asynchronous ALU zero flag for SKZ. |
-| `old_overflow` | 1-bit | Previous signed arithmetic overflow. |
-| `new_overflow` | 1-bit | Temporary signed arithmetic overflow. |
+| `old_overflow` | 1-bit | Previous overflow. |
+| `new_overflow` | 1-bit | Temporary overflow. |
 | `ac_out` | 16-bit | Current Accumulator value routed to ALU input A. |
 | `alu_out` | 16-bit | Processed ALU output routed to Accumulator input. |
 | `opcode` | 4-bit | Operation code controlling ALU function and Controller FSM transitions. |
@@ -45,20 +45,20 @@ The hierarchy design is divided into 7 modules:
 | :---: | :---: | :--- |
 | `0000` | **HLT** | Halt processor execution |
 | `0001` | **SKZ** | Skip next instruction if zero flag is asserted |
-| `0010` | **ADD** | Unsigned addition |
+| `0010` | **ADD** | Addition operation |
 | `0011` | **AND** | Bitwise AND operation |
 | `0100` | **XOR** | Bitwise XOR operation |
 | `0101` | **LDA** | Load data from memory to Accumulator |
-| `0110` | **STO** | Store Accumulator value to memory |
+| `0110` | **STO** | Store Accumulator value to Memory |
 | `0111` | **JMP** | Jump to target address |
 | `1000` | **SUB** | Subtraction operation |
 | `1001` | **OR**  | Bitwise OR operation |
-| `1010` | **MUL** | Unsigned multiplication |
-| `1011` | **___** | Mini Floating-Point Multiplier |
+| `1010` | **MUL** | Multiplication operation |
+| `1011` | **MAC** | Multiply-Accumulate operation |
 | `1100` | **SHL** | Shift left operation |
 | `1101` | **SHR** | Shift right operation |
 | `1110` | **NOT** | Invert the Accumulator value |
-| `1111` | **SKO** | Skip next instruction if overflow flag is asserted |
+| `1111` | **SKO** | Skip next instruction if overflow |
 
 ### 2.4 System Workflow
 
@@ -131,13 +131,20 @@ designing-risc-cpu/
 │   ├── instruction_register_tb.v
 │   ├── memory_tb.v
 │   ├── program_counter_tb.v
+│   ├── test_scenarios.txt
 │   ├── test1.txt
 │   ├── test2.txt
 │   ├── test3.txt
 │   ├── test4.txt
 │   └── test5.txt
 ├── Picture/
+│   └── hierarchy.png
 ├── Waveform/
+│   ├── Test1_waveform.png
+│   ├── Test2_waveform.png
+│   ├── Test3_waveform.png
+│   ├── Test4_waveform.png
+│   └── Test5_waveform.png
 ├── .gitignore                  
 └── README.md
 ```
@@ -195,7 +202,7 @@ other tests (***test_case != 1***), the TCL console prints out time, current tes
 | Test ID | Test Case Name | Scope | Tested Instructions | Objective & Criteria | Result |
 | :---: | :--- | :--- | :--- | :--- | :---: |
 | **TC_01** | **Signal Verification** | Controller FSM & Synchronization | `LDA`, `HALT` | Correct 8-state sequence and control signal timing | **PASSED** |
-| **TC_02** | **ALU Operations** | ALU Logic & AC Register | `LDA`, `ADD`, `AND`, `XOR`, `SUB`, `MUL`, `FPU_MUL` | Accurate calculation and writeback | **PASSED** |
+| **TC_02** | **ALU Operations** | ALU Logic & AC Register | `LDA`, `ADD`, `AND`, `XOR`, `SUB`, `MUL`, `MAC` | Accurate calculation and writeback | **PASSED** |
 | **TC_03** | **Special Logic Operations** | Branching, Flags & Memory Write | `JMP`, `SKZ`, `SKO`, `STO`, `SHL`, `SHR`, `OR` | Correct target jump, skip, and Memory store | **PASSED** |
 | **TC_04** | **Basic Combinational Test** | Data Pipeline & Bus Stability | `LDA`, `ADD`, `STO`, `HALT` | Stable bus transfer during execution | **PASSED** |
 | **TC_05** | **Complex Combinational Test** | Dynamic Workload & Edge Cases | Full 16 Instructions | Timing hazards under dynamic workload | **PASSED** |
