@@ -110,7 +110,7 @@ module controller_tb;
         run_instruction("Test 6", 4'b1000, 0, 0,  0, 1, 1, 0, 0, 0); // SUB
         run_instruction("Test 7", 4'b1001, 0, 0,  0, 1, 1, 0, 0, 0); // OR
         run_instruction("Test 8", 4'b1010, 0, 0,  0, 1, 1, 0, 0, 0); // MUL
-        run_instruction("Test 9", 4'b1011, 0, 0,  0, 1, 1, 0, 0, 0); // MULS
+        run_instruction("Test 9", 4'b1011, 0, 0,  0, 1, 1, 0, 0, 0); // MAC
         run_instruction("Test 10", 4'b1100, 0, 0, 0, 1, 1, 0, 0, 0); // SHL
         run_instruction("Test 11", 4'b1101, 0, 0, 0, 1, 1, 0, 0, 0); // SHR
         run_instruction("Test 12", 4'b1110, 0, 0, 0, 1, 1, 0, 0, 0); // NOT
