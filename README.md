@@ -160,7 +160,7 @@ risc-cpu-16-bit/
 * **The ***test_case*** Index**: A tracking variable used to identify suitable display
 mode to the TCL console.
 
-* **Memory Clear Task (*clear_ram*)**: A task used for zeroing out all memory addresses (***uut.mem.ram[i] = 8’b0***) before loading a new test.
+* **Memory Clear Task (*clear_ram*)**: A task used for zeroing out all memory addresses (***uut.mem.ram[i] = 16’b0***) before loading a new test.
 
 * **Data Setup Task (*setup*)**: A task used for initializing program instructions and
 data from an input ***text file*** of each testcase.
